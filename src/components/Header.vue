@@ -23,6 +23,7 @@
           <span></span>
           <span></span>
         </button>
+        <span class="menu-hint" :class="{ hidden: menuOpen }">← Click here for menu</span>
         <div class="menu-overlay" :class="{ open: menuOpen }" @click="menuOpen = false"></div>
         <ul class="nav-menu" :class="{ open: menuOpen }">
           <button class="menu-close" @click="menuOpen = false">
@@ -205,6 +206,39 @@ onUnmounted(() => {
   transition: 0.3s;
 }
 
+.menu-hint {
+  display: none;
+  position: absolute;
+  left: 65px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+  animation: pulse-hint 2s ease-in-out infinite;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+  z-index: 5;
+}
+
+.menu-hint.hidden {
+  display: none !important;
+}
+
+@keyframes pulse-hint {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-50%) scale(1.05);
+    opacity: 0.9;
+  }
+}
+
 .menu-overlay {
   display: none;
 }
@@ -295,6 +329,7 @@ onUnmounted(() => {
   padding: 0 20px;
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
 }
 
 .nav-menu {
@@ -425,6 +460,10 @@ onUnmounted(() => {
   .mobile-menu-toggle.hidden {
     opacity: 0;
     pointer-events: none;
+  }
+
+  .menu-hint {
+    display: block;
   }
 
   .logo {
