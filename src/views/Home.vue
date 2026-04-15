@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <SkeletonLoader v-if="loading" />
+    <div v-else>
     <section class="hero">
       <div class="hero-slider">
         <div 
@@ -191,16 +193,24 @@
       </div>
     </section>
   </div>
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import SkeletonLoader from '../components/SkeletonLoader.vue'
 
 const heroImages = ['/hero1.png', '/hero2.png']
 const currentSlide = ref(0)
+const loading = ref(true)
 let slideInterval = null
 
 onMounted(() => {
+  // Simulate loading time
+  setTimeout(() => {
+    loading.value = false
+  }, 800)
+  
   slideInterval = setInterval(() => {
     currentSlide.value = (currentSlide.value + 1) % heroImages.length
   }, 5000)

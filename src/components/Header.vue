@@ -29,17 +29,26 @@
             <span>✕</span>
           </button>
           <li><router-link to="/" @click="menuOpen = false">Home</router-link></li>
-          <li>
-            <a href="#" class="disabled-link" @click.prevent>
+          <li class="dropdown">
+            <router-link to="/about" @click="menuOpen = false">
               About Us
-              <span class="coming-soon-badge">Coming Soon</span>
-            </a>
+              <span class="dropdown-arrow">▼</span>
+            </router-link>
+            <ul class="dropdown-menu">
+              <li><router-link to="/about/history" @click="menuOpen = false">History</router-link></li>
+              <li><router-link to="/about/philosophy-vision-mission-goals" @click="menuOpen = false">Philosophy, Vision, Mission, and Goals</router-link></li>
+              <li><router-link to="/about/school-logo" @click="menuOpen = false">AMIS Logo</router-link></li>
+              <li><router-link to="/about/location" @click="menuOpen = false">School Location</router-link></li>
+            </ul>
           </li>
-          <li>
-            <a href="#" class="disabled-link" @click.prevent>
+          <li class="dropdown">
+            <a href="#" @click.prevent>
               Academics
-              <span class="coming-soon-badge">Coming Soon</span>
+              <span class="dropdown-arrow">▼</span>
             </a>
+            <ul class="dropdown-menu">
+              <li><router-link to="/academics/basic-education" @click="menuOpen = false">Basic Education - K to 12</router-link></li>
+            </ul>
           </li>
           <li>
             <a href="#" class="disabled-link" @click.prevent>
@@ -344,6 +353,65 @@ onUnmounted(() => {
   border-bottom-color: transparent !important;
 }
 
+.dropdown {
+  position: relative;
+}
+
+.dropdown-arrow {
+  font-size: 0.7rem;
+  margin-left: 4px;
+  transition: transform 0.3s;
+  display: inline-block;
+}
+
+.dropdown:hover .dropdown-arrow {
+  transform: rotate(0deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  list-style: none;
+  padding: 12px 0;
+  margin: 0;
+  min-width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdown-menu li {
+  border-bottom: none;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 20px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  border-bottom: none !important;
+  transition: all 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background: var(--bg-light);
+  color: var(--primary);
+  padding-left: 24px;
+}
+
 @media (max-width: 968px) {
   .menu-toggle {
     display: flex;
@@ -442,6 +510,37 @@ onUnmounted(() => {
   .nav-menu .router-link-active {
     color: white;
     border-bottom-color: white;
+  }
+
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: transparent;
+    padding: 0;
+    margin-left: 20px;
+  }
+
+  .dropdown-menu li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .dropdown-menu a {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    padding: 12px 0;
+  }
+
+  .dropdown-menu a:hover {
+    background: transparent;
+    color: white;
+    padding-left: 0;
+  }
+
+  .dropdown-arrow {
+    display: none;
   }
 
   .menu-overlay {
