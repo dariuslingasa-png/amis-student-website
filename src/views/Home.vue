@@ -3,19 +3,10 @@
     <SkeletonLoader v-if="loading" />
     <div v-else>
     <section class="hero">
-      <div class="hero-slider">
-        <div 
-          v-for="(image, index) in heroImages" 
-          :key="index"
-          class="hero-slide"
-          :class="{ 
-            active: currentSlide === index,
-            'slide-out': isTransitioning && currentSlide === index,
-            'slide-in': isTransitioning && nextSlide === index
-          }"
-          :style="{ backgroundImage: `url(${image})` }"
-        ></div>
-      </div>
+      <video class="hero-video" autoplay muted loop playsinline>
+        <source src="/hero_video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
       <div class="hero-overlay"></div>
       <div class="container">
         <div class="hero-content">
@@ -25,15 +16,6 @@
             <router-link to="/admissions" class="btn btn-hero">Enroll Now</router-link>
           </div>
         </div>
-      </div>
-      <div class="slider-dots">
-        <span 
-          v-for="(image, index) in heroImages" 
-          :key="index"
-          class="dot"
-          :class="{ active: currentSlide === index }"
-          @click="goToSlide(index)"
-        ></span>
       </div>
     </section>
 
@@ -201,120 +183,40 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
 
-const heroImages = ['/hero3.jpg', '/hero4.jpg']
-const currentSlide = ref(0)
 const loading = ref(true)
-const nextSlide = ref(1)
-const isTransitioning = ref(false)
-let slideInterval = null
 
 onMounted(() => {
   // Simulate loading time
   setTimeout(() => {
     loading.value = false
   }, 800)
-  
-  slideInterval = setInterval(() => {
-    changeSlide()
-  }, 5000)
 })
-
-onUnmounted(() => {
-  if (slideInterval) clearInterval(slideInterval)
-})
-
-function changeSlide() {
-  isTransitioning.value = true
-  nextSlide.value = (currentSlide.value + 1) % heroImages.length
-  
-  setTimeout(() => {
-    currentSlide.value = nextSlide.value
-    isTransitioning.value = false
-  }, 1000)
-}
-
-function goToSlide(index) {
-  if (index !== currentSlide.value && !isTransitioning.value) {
-    isTransitioning.value = true
-    nextSlide.value = index
-    
-    setTimeout(() => {
-      currentSlide.value = nextSlide.value
-      isTransitioning.value = false
-    }, 1000)
-  }
-}
 </script>
 
 <style scoped>
 .hero {
   position: relative;
-  margin-top: 150px;
-  min-height: 800px;
+  margin-top: 250px;
+  min-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  transition: margin-top 0.3s ease;
 }
 
-.hero-slider {
+.hero-video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-.hero-slide {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  transform: scale(1.2) translateX(100%);
-  transition: none;
-}
-
-.hero-slide.active {
-  opacity: 1;
-  transform: scale(1) translateX(0);
-  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease;
-}
-
-.hero-slide.slide-out {
-  animation: slideOutLeft 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
-}
-
-.hero-slide.slide-in {
-  animation: slideInRight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
-}
-
-@keyframes slideOutLeft {
-  0% {
-    opacity: 1;
-    transform: scale(1) translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(0.9) translateX(-100%);
-  }
-}
-
-@keyframes slideInRight {
-  0% {
-    opacity: 0;
-    transform: scale(1.2) translateX(100%);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateX(0);
-  }
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
 }
 
 .hero-overlay {
@@ -323,7 +225,7 @@ function goToSlide(index) {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -334,31 +236,6 @@ function goToSlide(index) {
   max-width: 800px;
   margin: 0 auto;
   color: white;
-}
-
-.slider-dots {
-  position: absolute;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 12px;
-  z-index: 2;
-}
-
-.dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.dot.active {
-  background: white;
-  width: 30px;
-  border-radius: 6px;
 }
 
 .hero-title {
@@ -512,7 +389,7 @@ function goToSlide(index) {
 @media (max-width: 768px) {
   .hero {
     padding: 140px 0 80px;
-    margin-top: 120px;
+    margin-top: 380px;
     min-height: 400px;
   }
   
@@ -526,19 +403,6 @@ function goToSlide(index) {
   
   .cta-content h2 {
     font-size: 2rem;
-  }
-
-  .slider-dots {
-    bottom: 20px;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-  }
-
-  .dot.active {
-    width: 20px;
   }
   
   .news-grid {

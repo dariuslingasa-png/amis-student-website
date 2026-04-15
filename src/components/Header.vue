@@ -1,6 +1,29 @@
 <template>
-  <header class="header">
+  <header class="header" :class="{ 'header-hidden': hideHeader }">
     <div class="main-header" :class="{ scrolled: isScrolled }">
+      <div class="top-bar">
+        <div class="top-bar-row">
+          <div class="social-links">
+            <a href="https://www.facebook.com/almunawwaraislamicschool" target="_blank" class="social-link" aria-label="Facebook">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
+            <a href="https://www.youtube.com/@amistv3214" target="_blank" class="social-link" aria-label="YouTube">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+              </svg>
+            </a>
+          </div>
+          <div class="top-links">
+            <a href="#" class="top-link">e-Book</a>
+            <span class="separator">|</span>
+            <a href="http://localhost/student_portal/public" target="_blank" class="top-link">Student Portal Login</a>
+            <span class="separator">|</span>
+            <a href="#" class="top-link">Login</a>
+          </div>
+        </div>
+      </div>
       <nav class="nav">
         <router-link to="/" class="logo">
           <img src="/logo.png" alt="AMIS Logo" class="logo-img" />
@@ -10,10 +33,49 @@
             <span class="logo-tagline">Enabling Our Students to Learn in Fid Dunya Wal Akhira</span>
           </div>
         </router-link>
-
-        <div class="nav-right">
+        <div class="contact-info-right">
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            <span>+63 927 299 1833</span>
+          </div>
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <a href="mailto:admi@amis.edu.ph">admi@amis.edu.ph</a>
+          </div>
+          <div class="contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span>Don Julian Rodriguez Avenue, Ma-a, Davao City</span>
+          </div>
         </div>
       </nav>
+      <div class="mobile-contact-bar">
+        <div class="mobile-contact-row">
+          <div class="mobile-contact-item">
+            <div class="contact-label">CALL SUPPORT</div>
+            <div class="contact-value">+63 927 299 1833</div>
+          </div>
+          <div class="mobile-contact-item">
+            <div class="contact-label">LOCATION</div>
+            <div class="contact-value">Don Julian Rodriguez Avenue, Ma-a, Davao City</div>
+          </div>
+        </div>
+        <div class="mobile-contact-row">
+          <div class="mobile-contact-item">
+            <div class="contact-label">EMAIL SUPPORT</div>
+            <div class="contact-value"><a href="mailto:admi@amis.edu.ph">admi@amis.edu.ph</a></div>
+          </div>
+          <div class="mobile-contact-item">
+            <a href="#" class="pre-enrollment-btn">PRE-ENROLLMENT</a>
+          </div>
+        </div>
+      </div>
     </div>
     
     <div class="white-bar">
@@ -74,13 +136,32 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isScrolled = ref(false)
 const menuOpen = ref(false)
+const hideHeader = ref(false)
+let lastScrollY = 0
+let ticking = false
 
 const handleScroll = () => {
-  isScrolled.value = window.scrollY > 20
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const currentScrollY = window.scrollY
+      
+      // Hide header when scrolling down, show when scrolling up
+      if (currentScrollY > lastScrollY && currentScrollY > 150) {
+        hideHeader.value = true
+      } else if (currentScrollY < lastScrollY) {
+        hideHeader.value = false
+      }
+      
+      lastScrollY = currentScrollY
+      isScrolled.value = currentScrollY > 20
+      ticking = false
+    })
+    ticking = true
+  }
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', handleScroll, { passive: true })
 })
 
 onUnmounted(() => {
@@ -99,11 +180,156 @@ onUnmounted(() => {
 
 .main-header {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  transition: all 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.header-hidden .main-header {
+  transform: translateY(-100%);
+}
+
+.white-bar {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  padding: 15px 0;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-hidden .white-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .main-header.scrolled {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.top-bar {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.top-bar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-link {
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.social-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.search-icon {
+  color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.search-icon:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+}
+
+.search-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.mobile-contact-bar {
+  display: none;
+}
+
+.top-info {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-info svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-weight: 700;
+}
+
+.top-info a.info-value {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.2s;
+  font-weight: 700;
+}
+
+.top-info a.info-value:hover {
+  color: white;
+}
+
+.top-info a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.top-info a:hover {
+  color: white;
+}
+
+.top-bar-left .separator {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
 }
 
 .nav {
@@ -112,6 +338,45 @@ onUnmounted(() => {
   align-items: center;
   padding: 20px 0;
   min-height: 97px;
+}
+
+.contact-info-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-right: 20px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  font-size: 0.85rem;
+  padding: 0 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.contact-item:first-child {
+  border-left: none;
+}
+
+.contact-item svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.contact-item span,
+.contact-item a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.contact-item a:hover {
+  opacity: 0.9;
 }
 
 .logo {
@@ -265,11 +530,29 @@ onUnmounted(() => {
   transform: rotate(90deg);
 }
 
-.nav-right {
+.top-links {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding-right: 20px;
+  gap: 12px;
+}
+
+.top-link {
+  color: white;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.top-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.top-links .separator {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
 }
 
 .nav-links {
@@ -316,13 +599,6 @@ onUnmounted(() => {
 .btn-portal:hover {
   background: rgba(255, 255, 255, 0.9);
   transform: translateY(-1px);
-}
-
-.white-bar {
-  background: white;
-  border-bottom: 1px solid var(--border);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 15px 0;
 }
 
 .white-bar-content {
@@ -495,6 +771,10 @@ onUnmounted(() => {
     min-height: auto;
   }
 
+  .contact-info-right {
+    display: none;
+  }
+
   .white-bar {
     padding: 10px 0;
   }
@@ -600,20 +880,157 @@ onUnmounted(() => {
     pointer-events: all;
   }
 
-  .nav-right {
-    position: fixed;
-    top: 92px;
-    left: 0;
-    right: 0;
-    background: var(--primary);
+  .main-header {
+    display: flex;
     flex-direction: column;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateY(-100%);
-    opacity: 0;
-    pointer-events: none;
+  }
+
+  .top-bar {
+    order: 1;
+    padding: 8px 15px;
+    background: rgba(0, 0, 0, 0.1);
+    gap: 0;
+  }
+
+  .nav {
+    order: 2;
+    display: flex;
+    justify-content: center;
+    padding: 20px 15px;
+  }
+
+  .logo {
+    flex-direction: row;
+    text-align: center;
+    padding: 0;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .logo-img {
+    height: 70px;
+    width: 70px;
+    margin-bottom: 0;
+  }
+
+  .logo-text-wrapper {
+    align-items: center;
+  }
+
+  .logo-text-arabic {
+    font-size: 1rem;
+    letter-spacing: 4px;
+    transform: scaleX(1.2);
+  }
+
+  .logo-text {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .logo-tagline {
+    font-size: 0.65rem;
+    align-self: center;
+  }
+
+  .top-bar-row {
+    width: 100%;
+  }
+
+  .top-bar-row:first-child {
+    display: none;
+  }
+
+  .top-bar-row:last-child {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 8px;
+  }
+
+  .social-link {
+    width: 32px;
+    height: 32px;
+  }
+
+  .social-link svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .search-icon {
+    display: flex;
+  }
+
+  .mobile-contact-bar {
+    order: 3;
+    padding: 20px 15px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobile-contact-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  .mobile-contact-item {
+    text-align: center;
+  }
+
+  .contact-label {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .contact-value {
+    font-size: 0.85rem;
+    color: white;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .contact-value a {
+    color: white;
+    text-decoration: none;
+    word-break: break-word;
+  }
+
+  .pre-enrollment-btn {
+    display: block;
+    background: #f59e0b;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
     transition: all 0.3s;
-    gap: 16px;
+  }
+
+  .pre-enrollment-btn:hover {
+    background: #d97706;
+    transform: translateY(-2px);
+  }
+
+  .top-bar-left {
+    display: none;
+  }
+
+  .top-links {
+    display: none;
   }
 
   .nav-links {
