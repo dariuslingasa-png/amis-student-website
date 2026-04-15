@@ -8,7 +8,11 @@
           v-for="(image, index) in heroImages" 
           :key="index"
           class="hero-slide"
-          :class="{ active: currentSlide === index }"
+          :class="{ 
+            active: currentSlide === index,
+            'slide-out': isTransitioning && currentSlide === index,
+            'slide-in': isTransitioning && nextSlide === index
+          }"
           :style="{ backgroundImage: `url(${image})` }"
         ></div>
       </div>
@@ -28,7 +32,7 @@
           :key="index"
           class="dot"
           :class="{ active: currentSlide === index }"
-          @click="currentSlide = index"
+          @click="goToSlide(index)"
         ></span>
       </div>
     </section>
@@ -200,9 +204,11 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import SkeletonLoader from '../components/SkeletonLoader.vue'
 
-const heroImages = ['/hero1.png', '/hero2.png']
+const heroImages = ['/hero3.jpg', '/hero4.jpg']
 const currentSlide = ref(0)
 const loading = ref(true)
+const nextSlide = ref(1)
+const isTransitioning = ref(false)
 let slideInterval = null
 
 onMounted(() => {
@@ -212,13 +218,35 @@ onMounted(() => {
   }, 800)
   
   slideInterval = setInterval(() => {
-    currentSlide.value = (currentSlide.value + 1) % heroImages.length
+    changeSlide()
   }, 5000)
 })
 
 onUnmounted(() => {
   if (slideInterval) clearInterval(slideInterval)
 })
+
+function changeSlide() {
+  isTransitioning.value = true
+  nextSlide.value = (currentSlide.value + 1) % heroImages.length
+  
+  setTimeout(() => {
+    currentSlide.value = nextSlide.value
+    isTransitioning.value = false
+  }, 1000)
+}
+
+function goToSlide(index) {
+  if (index !== currentSlide.value && !isTransitioning.value) {
+    isTransitioning.value = true
+    nextSlide.value = index
+    
+    setTimeout(() => {
+      currentSlide.value = nextSlide.value
+      isTransitioning.value = false
+    }, 1000)
+  }
+}
 </script>
 
 <style scoped>
@@ -249,11 +277,44 @@ onUnmounted(() => {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transform: scale(1.2) translateX(100%);
+  transition: none;
 }
 
 .hero-slide.active {
   opacity: 1;
+  transform: scale(1) translateX(0);
+  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s ease;
+}
+
+.hero-slide.slide-out {
+  animation: slideOutLeft 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+}
+
+.hero-slide.slide-in {
+  animation: slideInRight 1s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+}
+
+@keyframes slideOutLeft {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9) translateX(-100%);
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: scale(1.2) translateX(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
 }
 
 .hero-overlay {
