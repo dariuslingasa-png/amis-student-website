@@ -8,6 +8,8 @@ import PhilosophyVisionMissionGoals from './views/about/PhilosophyVisionMissionG
 import SchoolLogo from './views/about/SchoolLogo.vue'
 import CoreValues from './views/about/CoreValues.vue'
 import Location from './views/about/Location.vue'
+import WhyIslamicSchool from './views/about/WhyIslamicSchool.vue'
+import Certifications from './views/about/Certifications.vue'
 import Academics from './views/Academics.vue'
 import BasicEducation from './views/academics/BasicEducation.vue'
 import Admissions from './views/Admissions.vue'
@@ -22,6 +24,8 @@ const routes = [
   { path: '/about/school-logo', component: SchoolLogo },
   { path: '/about/core-values', component: CoreValues },
   { path: '/about/location', component: Location },
+  { path: '/about/why-islamic-school', component: WhyIslamicSchool },
+  { path: '/about/certifications', component: Certifications },
   { path: '/academics', component: Academics },
   { path: '/academics/basic-education', component: BasicEducation },
   { path: '/admissions', component: Admissions },
@@ -30,7 +34,15 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    // If there's a saved position (browser back/forward), use it
+    if (savedPosition) {
+      return savedPosition
+    }
+    // Otherwise, scroll to top
+    return { top: 0, behavior: 'smooth' }
+  }
 })
 
 createApp(App).use(router).mount('#app')

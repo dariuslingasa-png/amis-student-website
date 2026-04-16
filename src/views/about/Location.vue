@@ -1,25 +1,31 @@
 <template>
   <div class="location-page">
-    <section class="page-hero">
-      <div class="breadcrumb">
-        <router-link to="/">Home</router-link>
-        <span class="separator">›</span>
-        <router-link to="/about">About Us</router-link>
-        <span class="separator">›</span>
-        <span class="current">School Location</span>
-      </div>
+    <div class="breadcrumb-header">
       <div class="container">
-        <h1>Visit Us</h1>
-        <p>Al Munawwara Islamic School - Davao City</p>
+        <div class="breadcrumb">
+          <router-link to="/">Home</router-link>
+          <span class="separator">/</span>
+          <router-link to="/about">About Us</router-link>
+          <span class="separator">/</span>
+          <span>School Location</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="page-title">Visit Us</h1>
+        <p class="page-subtitle">Al Munawwara Islamic School - Davao City</p>
       </div>
     </section>
 
     <section class="map-section">
+      <div class="map-overlay"></div>
       <iframe 
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.4247467474706!2d125.58427682164505!3d7.076655203071124!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x32f96d40fc876e1b%3A0xb32cba4725997165!2sAl%20Munawwara%20Islamic%20School!5e0!3m2!1sen!2sph!4v1776238165660!5m2!1sen!2sph"
         width="100%" 
         height="100%" 
-        style="border:0;" 
+        style="border:0; pointer-events: none;" 
         allowfullscreen="" 
         loading="lazy" 
         referrerpolicy="no-referrer-when-downgrade">
@@ -115,24 +121,20 @@
   min-height: 100vh;
 }
 
-.page-hero {
+.breadcrumb-header {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: white;
-  padding: 180px 0 80px;
-  margin-top: 150px;
-  text-align: center;
+  padding: 20px 0;
+  margin-top: 0;
   position: relative;
+  top: 0;
 }
 
 .breadcrumb {
-  position: absolute;
-  top: 20px;
-  left: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
+  color: white;
   font-size: 0.9rem;
-  z-index: 10;
 }
 
 .breadcrumb a {
@@ -149,21 +151,19 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.breadcrumb .current {
-  color: white;
+.page-title {
+  font-size: 3rem;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  color: var(--text);
 }
 
-.page-hero h1 {
-  font-size: 3.5rem;
-  margin-bottom: 12px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-}
-
-.page-hero p {
+.page-subtitle {
+  text-align: center;
+  color: var(--text-light);
   font-size: 1.25rem;
-  opacity: 0.95;
+  margin-bottom: 60px;
 }
 
 .map-section {
@@ -174,6 +174,16 @@
 
 .map-section iframe {
   display: block;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: default;
 }
 
 .contact-section {
@@ -352,18 +362,13 @@
   color: #047857;
 }
 
-@media (max-width: 968px) {
-  .page-hero {
-    padding: 140px 0 60px;
-    margin-top: 120px;
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
   }
 
-  .page-hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .page-hero p {
-    font-size: 1.125rem;
+  .page-subtitle {
+    font-size: 1rem;
   }
 
   .map-section {

@@ -63,7 +63,7 @@
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 180px 0 100px;
-  margin-top: 80px;
+  
   text-align: center;
 }
 

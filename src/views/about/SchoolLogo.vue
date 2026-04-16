@@ -1,21 +1,21 @@
 <template>
   <div class="school-logo-page">
-    <section class="page-hero">
+    <div class="breadcrumb-header">
       <div class="container">
         <div class="breadcrumb">
           <router-link to="/">Home</router-link>
-          <span class="separator">›</span>
+          <span class="separator">/</span>
           <router-link to="/about">About Us</router-link>
-          <span class="separator">›</span>
-          <span class="current">School Logo</span>
+          <span class="separator">/</span>
+          <span>AMIS Logo</span>
         </div>
-        <h1>School Logo</h1>
-        <p>The symbol of our identity and values</p>
       </div>
-    </section>
+    </div>
 
     <section class="section">
       <div class="container">
+        <h1 class="page-title">AMIS Logo</h1>
+        <p class="page-subtitle">The symbol of our identity and values</p>
         <div class="logo-showcase">
           <img src="/logo/AMIS_Logo.png" alt="AMIS School Logo" class="school-logo" />
           <div class="logo-description">
@@ -64,20 +64,23 @@
 </template>
 
 <style scoped>
-.page-hero {
+.school-logo-page {
+  min-height: 100vh;
+}
+
+.breadcrumb-header {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: white;
-  padding: 180px 0 100px;
-  margin-top: 150px;
-  text-align: center;
+  padding: 20px 0;
+  margin-top: 0;
+  position: relative;
+  top: 0;
 }
 
 .breadcrumb {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  margin-bottom: 20px;
+  color: white;
   font-size: 0.9rem;
 }
 
@@ -95,20 +98,19 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.breadcrumb .current {
-  color: white;
-  font-weight: 600;
-}
-
-.page-hero h1 {
+.page-title {
   font-size: 3rem;
-  margin-bottom: 16px;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  color: var(--text);
 }
 
-.page-hero p {
+.page-subtitle {
+  text-align: center;
+  color: var(--text-light);
   font-size: 1.25rem;
-  opacity: 0.95;
+  margin-bottom: 60px;
 }
 
 .logo-showcase {
@@ -187,14 +189,17 @@
   font-weight: 600;
 }
 
-@media (max-width: 968px) {
-  .page-hero {
-    padding: 140px 0 80px;
-    margin-top: 120px;
+@media (max-width: 768px) {
+  .breadcrumb-header {
+    margin-top: 380px;
   }
 
-  .page-hero h1 {
-    font-size: 2.5rem;
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
   }
 
   .school-logo {

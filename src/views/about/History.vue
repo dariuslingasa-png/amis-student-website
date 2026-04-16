@@ -1,24 +1,23 @@
 <template>
   <div class="history-page">
-    <section class="page-hero">
+    <div class="breadcrumb-header">
       <div class="container">
         <div class="breadcrumb">
           <router-link to="/">Home</router-link>
-          <span class="separator">›</span>
+          <span class="separator">/</span>
           <router-link to="/about">About Us</router-link>
-          <span class="separator">›</span>
-          <span class="current">History</span>
+          <span class="separator">/</span>
+          <span>History</span>
         </div>
-        <h1>History</h1>
-        <p>Our journey and milestones</p>
       </div>
-    </section>
+    </div>
 
     <section class="section">
       <div class="container">
+        <h1 class="page-title">History</h1>
+        <p class="page-subtitle">Our journey and milestones</p>
+
         <div class="content-wrapper">
-          <h2>HISTORY</h2>
-          
           <p>Al Munawwara Islamic School (AMIS) was established in 2008 as part of the Moro National Liberation Front (MNLF) and Government of the Republic of the Philippines (GRP) Peace Agreement signed in 1996, which aimed to integrate traditional madrasahs into the Philippine educational system. Consequently, DepEd Order No. 51, Series of 2004, signed by the former DepEd Secretary Mr. Edilberto C. de Jesus, was issued to invite traditional madrasahs to become pilot private madrasahs. After four years of preparation, the program was implemented in 2008, and AMIS was among the schools selected to participate. It became the first-ever private Islamic school to be established in Davao City that is duly recognized by the Department of Education (DepEd).</p>
 
           <p>Initially, the school offered Kindergarten, Preparatory, and Grade 1 levels for the School Year 2008-2009 and the Summer of 2009. The school provided an 8-week curriculum on Early Childhood Learning in preparation for Grade 1 and an Accelerated Islamic Studies Learning Program for transfer students who did not have Islamic Studies in their previous schools.</p>
@@ -33,20 +32,23 @@
 </template>
 
 <style scoped>
-.page-hero {
+.history-page {
+  min-height: 100vh;
+}
+
+.breadcrumb-header {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: white;
-  padding: 180px 0 100px;
-  margin-top: 150px;
-  text-align: center;
+  padding: 20px 0;
+  margin-top: 0;
+  position: relative;
+  top: 0;
 }
 
 .breadcrumb {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  margin-bottom: 20px;
+  color: white;
   font-size: 0.9rem;
 }
 
@@ -64,33 +66,24 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.breadcrumb .current {
-  color: white;
-  font-weight: 600;
-}
-
-.page-hero h1 {
+.page-title {
   font-size: 3rem;
-  margin-bottom: 16px;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  color: var(--text);
 }
 
-.page-hero p {
+.page-subtitle {
+  text-align: center;
+  color: var(--text-light);
   font-size: 1.25rem;
-  opacity: 0.95;
+  margin-bottom: 60px;
 }
 
 .content-wrapper {
   max-width: 900px;
   margin: 0 auto;
-}
-
-.content-wrapper h2 {
-  font-size: 2.5rem;
-  color: var(--primary);
-  margin-bottom: 30px;
-  text-align: center;
-  font-weight: 700;
 }
 
 .content-wrapper p {
@@ -101,18 +94,17 @@
   margin-bottom: 25px;
 }
 
-@media (max-width: 968px) {
-  .page-hero {
-    padding: 140px 0 80px;
-    margin-top: 120px;
+@media (max-width: 768px) {
+  .breadcrumb-header {
+    margin-top: 380px;
   }
 
-  .page-hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .content-wrapper h2 {
+  .page-title {
     font-size: 2rem;
+  }
+
+  .page-subtitle {
+    font-size: 1rem;
   }
 
   .content-wrapper p {

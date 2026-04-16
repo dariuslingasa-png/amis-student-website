@@ -1,5 +1,5 @@
 <template>
-  <header class="header" :class="{ 'header-hidden': hideHeader }">
+  <header class="header">
     <div class="main-header" :class="{ scrolled: isScrolled }">
       <div class="top-bar">
         <div class="top-bar-row">
@@ -95,19 +95,25 @@
           <li class="dropdown">
             <router-link to="/about" @click="menuOpen = false">
               About Us
-              <span class="dropdown-arrow">▼</span>
+              <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </router-link>
             <ul class="dropdown-menu">
               <li><router-link to="/about/history" @click="menuOpen = false">History</router-link></li>
               <li><router-link to="/about/philosophy-vision-mission-goals" @click="menuOpen = false">Philosophy, Vision, Mission, and Goals</router-link></li>
               <li><router-link to="/about/school-logo" @click="menuOpen = false">AMIS Logo</router-link></li>
+              <li><router-link to="/about/why-islamic-school" @click="menuOpen = false">Why Islamic School?</router-link></li>
+              <li><router-link to="/about/certifications" @click="menuOpen = false">Certifications & Recognition</router-link></li>
               <li><router-link to="/about/location" @click="menuOpen = false">School Location</router-link></li>
             </ul>
           </li>
           <li class="dropdown">
             <a href="#" @click.prevent>
               Academics
-              <span class="dropdown-arrow">▼</span>
+              <svg class="dropdown-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </a>
             <ul class="dropdown-menu">
               <li><router-link to="/academics/basic-education" @click="menuOpen = false">Basic Education - K to 12</router-link></li>
@@ -136,24 +142,12 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const isScrolled = ref(false)
 const menuOpen = ref(false)
-const hideHeader = ref(false)
-let lastScrollY = 0
 let ticking = false
 
 const handleScroll = () => {
   if (!ticking) {
     window.requestAnimationFrame(() => {
-      const currentScrollY = window.scrollY
-      
-      // Hide header when scrolling down, show when scrolling up
-      if (currentScrollY > lastScrollY && currentScrollY > 150) {
-        hideHeader.value = true
-      } else if (currentScrollY < lastScrollY) {
-        hideHeader.value = false
-      }
-      
-      lastScrollY = currentScrollY
-      isScrolled.value = currentScrollY > 20
+      isScrolled.value = window.scrollY > 20
       ticking = false
     })
     ticking = true
@@ -171,22 +165,13 @@ onUnmounted(() => {
 
 <style scoped>
 .header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+  display: contents;
 }
 
 .main-header {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
-  will-change: transform;
-}
-
-.header-hidden .main-header {
-  transform: translateY(-100%);
+  position: relative;
+  z-index: 1000;
 }
 
 .white-bar {
@@ -194,17 +179,9 @@ onUnmounted(() => {
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   padding: 15px 0;
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.header-hidden .white-bar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1001;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .main-header.scrolled {
@@ -668,6 +645,19 @@ onUnmounted(() => {
   position: relative;
 }
 
+.dropdown-icon {
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.dropdown:hover .dropdown-icon {
+  transform: rotate(180deg);
+}
+
 .dropdown-arrow {
   font-size: 0.7rem;
   margin-left: 4px;
@@ -901,36 +891,44 @@ onUnmounted(() => {
 
   .logo {
     flex-direction: row;
-    text-align: center;
-    padding: 0;
-    gap: 15px;
+    text-align: left;
+    padding: 0 10px;
+    gap: 12px;
     align-items: center;
+    justify-content: center;
   }
 
   .logo-img {
-    height: 70px;
-    width: 70px;
+    height: 55px;
+    width: 55px;
     margin-bottom: 0;
+    flex-shrink: 0;
   }
 
   .logo-text-wrapper {
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .logo-text-arabic {
-    font-size: 1rem;
-    letter-spacing: 4px;
-    transform: scaleX(1.2);
+    font-size: 1.1rem;
+    letter-spacing: 0px;
+    transform: none;
+    margin-bottom: 2px;
+    width: auto;
   }
 
   .logo-text {
-    font-size: 1rem;
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
   }
 
   .logo-tagline {
-    font-size: 0.65rem;
-    align-self: center;
+    font-size: 0.55rem;
+    line-height: 1.2;
+    margin-top: 3px;
+    align-self: flex-start;
   }
 
   .top-bar-row {
@@ -967,37 +965,40 @@ onUnmounted(() => {
 
   .mobile-contact-bar {
     order: 3;
-    padding: 20px 15px;
+    padding: 10px 15px 15px;
     background: transparent;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 12px;
   }
 
   .mobile-contact-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 10px;
   }
 
   .mobile-contact-item {
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .contact-label {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   .contact-value {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     color: white;
     font-weight: 700;
-    line-height: 1.4;
+    line-height: 1.3;
   }
 
   .contact-value a {
@@ -1007,17 +1008,18 @@ onUnmounted(() => {
   }
 
   .pre-enrollment-btn {
-    display: block;
+    display: inline-block;
     background: #f59e0b;
     color: white;
-    padding: 12px 20px;
-    border-radius: 8px;
+    padding: 8px 12px;
+    border-radius: 6px;
     text-decoration: none;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s;
+    margin-top: auto;
   }
 
   .pre-enrollment-btn:hover {

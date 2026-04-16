@@ -1,16 +1,21 @@
 <template>
   <div class="basic-education-page">
-    <section class="page-hero">
+    <div class="breadcrumb-header">
       <div class="container">
         <div class="breadcrumb">
           <router-link to="/">Home</router-link>
-          <span class="separator">›</span>
+          <span class="separator">/</span>
           <span>Academics</span>
-          <span class="separator">›</span>
-          <span class="current">Basic Education - K to 12</span>
+          <span class="separator">/</span>
+          <span>Basic Education - K to 12</span>
         </div>
-        <h1>Basic Education - K to 12</h1>
-        <p>Comprehensive education from Kindergarten to Grade 12</p>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <h1 class="page-title">Basic Education - K to 12</h1>
+        <p class="page-subtitle">Comprehensive education from Kindergarten to Grade 12</p>
       </div>
     </section>
 
@@ -27,22 +32,23 @@
 </template>
 
 <style scoped>
-.page-hero {
+.basic-education-page {
+  min-height: 100vh;
+}
+
+.breadcrumb-header {
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: white;
-  padding: 180px 0 100px;
-  margin-top: 150px;
-  text-align: center;
+  padding: 20px 0;
+  margin-top: 0;
   position: relative;
+  top: 0;
 }
 
 .breadcrumb {
-  position: absolute;
-  top: 20px;
-  left: 20px;
   display: flex;
   align-items: center;
   gap: 8px;
+  color: white;
   font-size: 0.9rem;
 }
 
@@ -60,20 +66,19 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.breadcrumb .current {
-  color: white;
-  font-weight: 600;
-}
-
-.page-hero h1 {
+.page-title {
   font-size: 3rem;
-  margin-bottom: 16px;
   font-weight: 700;
+  text-align: center;
+  margin-bottom: 16px;
+  color: var(--text);
 }
 
-.page-hero p {
+.page-subtitle {
+  text-align: center;
+  color: var(--text-light);
   font-size: 1.25rem;
-  opacity: 0.95;
+  margin-bottom: 60px;
 }
 
 .coming-soon-section {
@@ -107,14 +112,13 @@
   line-height: 1.8;
 }
 
-@media (max-width: 968px) {
-  .page-hero {
-    padding: 140px 0 80px;
-    margin-top: 120px;
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
   }
 
-  .page-hero h1 {
-    font-size: 2rem;
+  .page-subtitle {
+    font-size: 1rem;
   }
 
   .icon {

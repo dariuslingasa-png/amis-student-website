@@ -134,7 +134,7 @@
   background: linear-gradient(135deg, #059669 0%, #047857 100%);
   color: white;
   padding: 180px 0 100px;
-  margin-top: 150px;
+  
   text-align: center;
 }
 
@@ -379,7 +379,7 @@
 @media (max-width: 968px) {
   .page-hero {
     padding: 140px 0 80px;
-    margin-top: 120px;
+    
   }
   
   .page-hero h1 {

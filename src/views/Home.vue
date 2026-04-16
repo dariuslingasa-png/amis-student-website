@@ -199,7 +199,7 @@ onMounted(() => {
 <style scoped>
 .hero {
   position: relative;
-  margin-top: 250px;
+  
   min-height: 700px;
   display: flex;
   align-items: center;
@@ -389,7 +389,7 @@ onMounted(() => {
 @media (max-width: 768px) {
   .hero {
     padding: 140px 0 80px;
-    margin-top: 380px;
+    
     min-height: 400px;
   }
   
@@ -571,7 +571,7 @@ onMounted(() => {
 .event-month {
   font-size: 0.9rem;
   font-weight: 600;
-  margin-top: 4px;
+  
 }
 
 .event-details h3 {
