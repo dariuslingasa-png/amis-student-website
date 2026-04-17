@@ -14,10 +14,12 @@ import Academics from './views/Academics.vue'
 import BasicEducation from './views/academics/BasicEducation.vue'
 import Admissions from './views/Admissions.vue'
 import Contact from './views/Contact.vue'
+import AnnouncementDetail from './views/AnnouncementDetail.vue'
 import './style.css'
 
 const routes = [
   { path: '/', component: Home },
+  { path: '/announcement/:id', component: AnnouncementDetail },
   { path: '/about', component: About },
   { path: '/about/history', component: History },
   { path: '/about/philosophy-vision-mission-goals', component: PhilosophyVisionMissionGoals },

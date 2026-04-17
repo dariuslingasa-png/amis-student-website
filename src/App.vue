@@ -1,22 +1,28 @@
 <template>
   <div class="app">
-    <Header />
-    <main>
-      <router-view />
-    </main>
-    <Footer />
+    <!-- Show maintenance page if maintenance mode is enabled -->
+    <Maintenance v-if="maintenanceMode" />
     
-    <!-- Scroll to Top Button -->
-    <button 
-      v-show="showScrollTop" 
-      @click="scrollToTop" 
-      class="scroll-to-top"
-      aria-label="Scroll to top"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
-    </button>
+    <!-- Normal website content -->
+    <template v-else>
+      <Header />
+      <main>
+        <router-view />
+      </main>
+      <Footer />
+      
+      <!-- Scroll to Top Button -->
+      <button 
+        v-show="showScrollTop" 
+        @click="scrollToTop" 
+        class="scroll-to-top"
+        aria-label="Scroll to top"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </template>
   </div>
 </template>
 
@@ -24,8 +30,24 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import Maintenance from './views/Maintenance.vue'
 
 const showScrollTop = ref(false)
+const maintenanceMode = ref(false)
+
+const checkMaintenanceMode = async () => {
+  try {
+    const response = await fetch('http://localhost:3001/api/public/settings?key=maintenance_mode')
+    if (response.ok) {
+      const data = await response.json()
+      maintenanceMode.value = data.value === 'true'
+    }
+  } catch (error) {
+    console.error('Failed to check maintenance mode:', error)
+    // If API fails, assume not in maintenance mode
+    maintenanceMode.value = false
+  }
+}
 
 const handleScroll = () => {
   showScrollTop.value = window.scrollY > 300
@@ -39,6 +61,10 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
+  checkMaintenanceMode()
+  // Check maintenance mode every 30 seconds
+  setInterval(checkMaintenanceMode, 30000)
+  
   window.addEventListener('scroll', handleScroll)
 })
 
