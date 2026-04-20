@@ -1,75 +1,79 @@
 # AMIS School Website
 
-Modern school website built with Vue 3 and Vite (2026).
+Public-facing website for Al-Munawwar Islamic School.
 
 ## Features
+- Live announcements from database
+- Facebook feed integration
+- Responsive design
+- Direct database connection (no dependency on admin portal)
 
-- Modern, responsive design
-- Vue 3 Composition API
-- Vue Router for navigation
-- Clean and minimal UI
-- Mobile-friendly
-- Fast performance with Vite
+## Tech Stack
+- **Frontend**: Vue 3 + Vite
+- **Backend API**: Express.js
+- **Database**: PostgreSQL (shared with admin portal)
 
 ## Setup
 
-1. Install dependencies:
+### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-2. Run development server:
+### 2. Configure Environment
+Copy `.env.example` to `.env` and update with your database credentials:
+```env
+VITE_DB_HOST=localhost
+VITE_DB_PORT=5432
+VITE_DB_NAME=amis_admin
+VITE_DB_USER=postgres
+VITE_DB_PASSWORD=your_password
+```
+
+### 3. Run the Application
+
+**Option A: Start Everything (Recommended)**
 ```bash
+npm run dev:all
+```
+This starts both the API server (port 3002) and frontend (port 5173).
+
+**Option B: Start Separately**
+```bash
+# Terminal 1 - API Server
+npm run server
+
+# Terminal 2 - Frontend
 npm run dev
 ```
 
-3. Build for production:
-```bash
-npm run build
-```
+**Option C: Use Batch Files (Windows)**
+- Double-click `START_SCHOOL_WEBSITE.bat` (starts both)
+- Or use `START_SCHOOL_WEBSITE_API.bat` (API only)
 
-4. Preview production build:
-```bash
-npm run preview
-```
-
-## Project Structure
+## How It Works
 
 ```
-school_website/
-├── src/
-│   ├── components/
-│   │   ├── Header.vue
-│   │   └── Footer.vue
-│   ├── views/
-│   │   ├── Home.vue
-│   │   ├── About.vue
-│   │   ├── Academics.vue
-│   │   ├── Admissions.vue
-│   │   └── Contact.vue
-│   ├── App.vue
-│   ├── main.js
-│   └── style.css
-├── index.html
-├── package.json
-└── vite.config.js
+School Website Frontend (port 5173)
+    ↓ Fetch announcements
+School Website API (port 3001)
+    ↓ Query database
+PostgreSQL Database (port 5432)
 ```
 
-## Pages
+The school website has its own API server that connects directly to the database. This means:
+- ✅ Announcements display even if admin portal is offline
+- ✅ No dependency on admin portal for public content
+- ✅ Admin can login/logout without affecting website
+- ✅ Faster response times
 
-- Home - Landing page with features and stats
-- About - Mission, vision, and values
-- Academics - Programs and curriculum
-- Admissions - Application process and requirements
-- Contact - Contact form and information
+## URLs
+- **Frontend**: http://localhost:5173
+- **API**: http://localhost:3001
+- **API Health**: http://localhost:3001/api/health
+- **Announcements API**: http://localhost:3001/api/announcements
 
-## Development
-
-The site runs on `http://localhost:3000` by default.
-
-## Technologies
-
-- Vue 3
-- Vite
-- Vue Router
-- Modern CSS
+## Notes
+- The website shares the same database as the admin portal
+- Only published announcements are displayed
+- Falls back to sample data if database is unavailable

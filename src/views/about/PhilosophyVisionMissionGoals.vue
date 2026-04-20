@@ -162,10 +162,6 @@
 }
 
 @media (max-width: 768px) {
-  .breadcrumb-header {
-    margin-top: 380px;
-  }
-
   .page-title {
     font-size: 2rem;
   }

@@ -11,6 +11,9 @@
       </main>
       <Footer />
       
+      <!-- Feedback Button Sticker -->
+      <FeedbackButton />
+      
       <!-- Scroll to Top Button -->
       <button 
         v-show="showScrollTop" 
@@ -27,25 +30,47 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 import Maintenance from './views/Maintenance.vue'
+import FeedbackButton from './components/FeedbackButton.vue'
 
+const route = useRoute()
 const showScrollTop = ref(false)
 const maintenanceMode = ref(false)
 
 const checkMaintenanceMode = async () => {
   try {
-    const response = await fetch('http://localhost:3001/api/public/settings?key=maintenance_mode')
+    const response = await fetch('http://localhost:3002/api/settings')
     if (response.ok) {
       const data = await response.json()
-      maintenanceMode.value = data.value === 'true'
+      maintenanceMode.value = data.maintenance_mode === 'true'
     }
   } catch (error) {
-    console.error('Failed to check maintenance mode:', error)
-    // If API fails, assume not in maintenance mode
+    // Silently fail - API is offline, assume not in maintenance mode
     maintenanceMode.value = false
+  }
+}
+
+const trackVisit = async () => {
+  try {
+    const pageUrl = window.location.pathname
+    const referrer = document.referrer || null
+
+    await fetch('http://localhost:3002/api/track-visit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        page_url: pageUrl,
+        referrer: referrer,
+      }),
+    })
+  } catch (error) {
+    // Silently fail - don't disrupt user experience
   }
 }
 
@@ -59,6 +84,11 @@ const scrollToTop = () => {
     behavior: 'smooth'
   })
 }
+
+// Track page visits on route change
+watch(() => route.path, () => {
+  trackVisit()
+}, { immediate: true })
 
 onMounted(() => {
   checkMaintenanceMode()

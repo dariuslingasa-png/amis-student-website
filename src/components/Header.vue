@@ -383,12 +383,11 @@ onUnmounted(() => {
   line-height: 1.2;
   font-family: 'Traditional Arabic', 'Arabic Typesetting', 'Simplified Arabic', Arial, sans-serif;
   direction: rtl;
+  unicode-bidi: embed;
   margin-bottom: 4px;
-  letter-spacing: 20px;
+  letter-spacing: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
   -webkit-font-smoothing: antialiased;
-  transform: scaleX(1.5);
-  transform-origin: center;
   text-align: center;
   width: 100%;
 }
@@ -743,8 +742,8 @@ onUnmounted(() => {
 
   .logo-text-arabic {
     font-size: 1rem;
-    letter-spacing: 4px;
-    transform: scaleX(1.2);
+    letter-spacing: 0;
+    transform: none;
   }
 
   .logo-text {
@@ -912,7 +911,7 @@ onUnmounted(() => {
 
   .logo-text-arabic {
     font-size: 1.1rem;
-    letter-spacing: 0px;
+    letter-spacing: 0;
     transform: none;
     margin-bottom: 2px;
     width: auto;

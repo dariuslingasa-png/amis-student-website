@@ -65,8 +65,8 @@
         
         <div class="cta-box">
           <h3>Ready to Apply?</h3>
-          <p>Start your application today</p>
-          <button class="btn btn-primary">Apply Now</button>
+          <p>Contact us for more information about enrollment</p>
+          <router-link to="/contact" class="btn btn-primary">Contact Us</router-link>
         </div>
       </div>
     </section>
@@ -185,6 +185,22 @@
   font-size: 1.125rem;
   color: var(--text-light);
   margin-bottom: 24px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: var(--primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
