@@ -12,31 +12,62 @@
       <source :src="heroVideoUrl" type="video/mp4">
       Your browser does not support the video tag.
     </video>
-    <img 
-      v-else 
-      :src="heroImageUrl" 
-      alt="Hero Background" 
-      class="hero-image"
-    />
+    
+    <!-- Image Slideshow -->
+    <template v-else>
+      <div v-if="heroSlides.length > 0" class="hero-slideshow">
+        <img 
+          v-for="(slide, index) in heroSlides"
+          :key="slide.id"
+          :src="slide.image_url" 
+          :alt="slide.title" 
+          class="hero-image"
+          :class="{ active: index === currentSlide }"
+        />
+      </div>
+      <img 
+        v-else
+        :src="heroImageUrl" 
+        alt="Hero Background" 
+        class="hero-image active"
+      />
+    </template>
+    
     <div class="hero-overlay"></div>
     <div class="container">
       <div class="hero-content">
-        <h1 class="hero-title">Building Tomorrow's Leaders</h1>
-        <p class="hero-subtitle">Nurturing excellence in Islamic education and character development</p>
+        <h1 class="hero-title">{{ heroTitle }}</h1>
+        <p class="hero-subtitle">{{ heroSubtitle }}</p>
         <div class="hero-buttons">
           <router-link to="/admissions" class="btn btn-hero">Enroll Now</router-link>
         </div>
       </div>
     </div>
+    
+    <!-- Slide Indicators -->
+    <div v-if="heroType === 'image' && heroSlides.length > 1" class="slide-indicators">
+      <button
+        v-for="(slide, index) in heroSlides"
+        :key="index"
+        @click="currentSlide = index"
+        :class="{ active: index === currentSlide }"
+        class="indicator"
+      ></button>
+    </div>
   </section>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 
 const heroType = ref('video')
 const heroVideoUrl = ref('/hero_video.mp4')
 const heroImageUrl = ref('/hero_image.jpg')
+const heroTitle = ref("Building Tomorrow's Leaders")
+const heroSubtitle = ref('Nurturing excellence in Islamic education and character development')
+const heroSlides = ref([])
+const currentSlide = ref(0)
+let slideInterval = null
 
 const fetchHeroSettings = async () => {
   try {
@@ -46,14 +77,65 @@ const fetchHeroSettings = async () => {
       if (settings.hero_type) heroType.value = settings.hero_type
       if (settings.hero_video_url) heroVideoUrl.value = settings.hero_video_url
       if (settings.hero_image_url) heroImageUrl.value = settings.hero_image_url
+      if (settings.hero_title) heroTitle.value = settings.hero_title
+      if (settings.hero_subtitle) heroSubtitle.value = settings.hero_subtitle
     }
   } catch (error) {
     // Use default settings on error
   }
 }
 
-onMounted(() => {
-  fetchHeroSettings()
+const fetchHeroSlides = async () => {
+  try {
+    const response = await fetch('http://localhost:3002/api/hero-slides')
+    if (response.ok) {
+      const slides = await response.json()
+      heroSlides.value = slides
+    }
+  } catch (error) {
+    console.error('Failed to fetch hero slides:', error)
+  }
+}
+
+const startSlideshow = () => {
+  if (heroSlides.value.length > 1) {
+    slideInterval = setInterval(() => {
+      currentSlide.value = (currentSlide.value + 1) % heroSlides.value.length
+    }, 5000) // Change slide every 5 seconds
+  }
+}
+
+const stopSlideshow = () => {
+  if (slideInterval) {
+    clearInterval(slideInterval)
+    slideInterval = null
+  }
+}
+
+watch(heroType, (newType) => {
+  if (newType === 'image') {
+    startSlideshow()
+  } else {
+    stopSlideshow()
+  }
+})
+
+watch(() => heroSlides.value.length, () => {
+  if (heroType.value === 'image') {
+    startSlideshow()
+  }
+})
+
+onMounted(async () => {
+  await fetchHeroSettings()
+  await fetchHeroSlides()
+  if (heroType.value === 'image') {
+    startSlideshow()
+  }
+})
+
+onUnmounted(() => {
+  stopSlideshow()
 })
 </script>
 
@@ -79,6 +161,15 @@ onMounted(() => {
   z-index: 0;
 }
 
+.hero-slideshow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
 .hero-image {
   position: absolute;
   top: 0;
@@ -87,7 +178,12 @@ onMounted(() => {
   height: 100%;
   object-fit: cover;
   object-position: center;
-  z-index: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.hero-image.active {
+  opacity: 1;
 }
 
 .hero-overlay {
@@ -148,6 +244,37 @@ onMounted(() => {
   transform: translateY(-2px);
 }
 
+.slide-indicators {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 3;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.indicator.active {
+  background: white;
+  width: 32px;
+  border-radius: 6px;
+}
+
 @media (max-width: 768px) {
   .hero {
     padding: 140px 0 80px;
@@ -160,6 +287,19 @@ onMounted(() => {
   
   .hero-subtitle {
     font-size: 1rem;
+  }
+  
+  .slide-indicators {
+    bottom: 20px;
+  }
+  
+  .indicator {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .indicator.active {
+    width: 24px;
   }
 }
 </style>

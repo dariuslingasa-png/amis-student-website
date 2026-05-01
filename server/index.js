@@ -66,7 +66,7 @@ app.get('/api/settings', async (req, res) => {
     const result = await pool.query(`
       SELECT key, value, updated_at
       FROM settings
-      WHERE key IN ('maintenance_mode', 'maintenance_message', 'hero_type', 'hero_video_url', 'hero_image_url')
+      WHERE key IN ('maintenance_mode', 'maintenance_message', 'maintenance_signature', 'hero_type', 'hero_video_url', 'hero_image_url', 'hero_title', 'hero_subtitle')
     `);
 
     const settings = {};
@@ -78,6 +78,23 @@ app.get('/api/settings', async (req, res) => {
   } catch (error) {
     console.error('Error fetching settings:', error);
     res.status(500).json({ error: 'Failed to fetch settings' });
+  }
+});
+
+// Get hero slides
+app.get('/api/hero-slides', async (req, res) => {
+  try {
+    const result = await pool.query(`
+      SELECT id, image_url, title, subtitle, display_order
+      FROM hero_slides
+      WHERE is_active = true
+      ORDER BY display_order ASC, created_at DESC
+    `);
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching hero slides:', error);
+    res.status(500).json({ error: 'Failed to fetch hero slides' });
   }
 });
 

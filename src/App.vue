@@ -92,8 +92,8 @@ watch(() => route.path, () => {
 
 onMounted(() => {
   checkMaintenanceMode()
-  // Check maintenance mode every 30 seconds
-  setInterval(checkMaintenanceMode, 30000)
+  // Check maintenance mode every 3 seconds for instant updates
+  setInterval(checkMaintenanceMode, 3000)
   
   window.addEventListener('scroll', handleScroll)
 })

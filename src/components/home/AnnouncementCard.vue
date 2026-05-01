@@ -51,8 +51,15 @@ const formatDate = (date) => {
   color: inherit;
   aspect-ratio: 1 / 1;
   align-self: start;
-  max-height: 300px;
-  max-width: 300px;
+  width: 100%;
+  max-width: 100%;
+}
+
+@media (min-width: 769px) {
+  .news-card {
+    max-height: 300px;
+    max-width: 300px;
+  }
 }
 
 .news-image {

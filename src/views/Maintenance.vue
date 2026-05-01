@@ -29,17 +29,33 @@ const signature = ref('IT Staff')
 
 const fetchMaintenanceSettings = async () => {
   try {
-    // Fetch message
+    // Try fetching from school website API first (port 3002)
+    const response = await fetch('http://localhost:3002/api/settings')
+    if (response.ok) {
+      const data = await response.json()
+      
+      // Update message if available
+      if (data.maintenance_message && data.maintenance_message.trim()) {
+        message.value = data.maintenance_message
+      }
+      
+      // Update signature if available
+      if (data.maintenance_signature && data.maintenance_signature.trim()) {
+        signature.value = data.maintenance_signature
+      }
+      
+      return
+    }
+    
+    // Fallback to admin portal API (port 3001)
     const messageResponse = await fetch('http://localhost:3001/api/public/settings?key=maintenance_message')
     if (messageResponse.ok) {
       const messageData = await messageResponse.json()
-      // Only update if there's actual content (not empty or whitespace)
       if (messageData.value && messageData.value.trim()) {
         message.value = messageData.value
       }
     }
 
-    // Fetch signature
     const signatureResponse = await fetch('http://localhost:3001/api/public/settings?key=maintenance_signature')
     if (signatureResponse.ok) {
       const signatureData = await signatureResponse.json()
@@ -48,7 +64,7 @@ const fetchMaintenanceSettings = async () => {
       }
     }
   } catch (error) {
-    // Silently fail - admin portal is offline, use default values
+    // Silently fail - APIs are offline, use default values
   }
 }
 
